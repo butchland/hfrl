@@ -3,3 +3,7 @@ title: "HuggingFace Reinforcement Learning"
 jupyter: python3
 ---
 > My notes for the Hugging Face Reinforcement Learning Course
+
+## Notes
+
+* [Unit 1 (Intro)](unit1.qmd) - _partial_

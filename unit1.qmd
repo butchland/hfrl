@@ -4,18 +4,21 @@ jupyter: python3
 ---
 
 * What is RL
-   - big picture
-       Agent(AI) will Learn from Environment
-	   by Interacting with Environment and
-	   receive Rewards (neg/pos) as Feedback
-	   for performing Actions
+   - big picture:
+
+      - _Agent(AI)_ will _Learn_ from _Environment_
+	   by _Interacting_ with Environment and
+	   receive _Rewards_ (neg/pos) as _Feedback_
+	   for performing _Actions_
 	  
-       while not done:	  
+      - ```
+   while not done:	  
 		  Environment -> observation -> Agent 
-	      Agent -> action -> Environment
-	      Environment -> reward, new observation, done -> Agent
-	  
-   - example: 
+	     Agent -> action -> Environment
+	     Environment -> reward, new observation, done -> Agent
+	```  
+   - example:
+   ``` 
         boy learning to play video game 
             - boy is Agent,
 		      screen is observation
@@ -30,19 +33,21 @@ jupyter: python3
                  - boy presses button again and tough
                  - game reacts by updating screen -> avatar touches squid and dies, rewarding neg points (dead) 
 				 - boy learns touching squid rewards dead, and ends game
-				 
+	```
+		 
    - formal definition:
-        - RL is FRAMEWORK for solving CONTROL TASKS (aka decision problems) 
-		- by building AGENTS
-		- AGENTS that LEARN from the ENVIRONMENT
-		    - LEARN by INTERACTING with ENVIRONMENT 
-		    - LEARN thru TRIAL and ERROR
-		    - LEARN by RECEIVING REWARDS(NEGATIVE/POSITIVE) AS FEEDBACK
+        - RL is **FRAMEWORK** for solving **CONTROL TASKS** (aka decision problems) 
+		- by building **AGENTS**
+		- AGENTS that **LEARN** from the **ENVIRONMENT**
+		    - LEARN by **INTERACTING** with ENVIRONMENT 
+		    - LEARN thru **TRIAL and ERROR**
+		    - LEARN by receiving **REWARDS**(NEGATIVE/POSITIVE) as **FEEDBACK** 
 * RL Framework
    - RL Process
-        - Environment -> (state St, reward Rt) -> Agent -> action At -> Environment -> (state St+1, reward Rt+1) --> Agent (loop)
-	    - IOW: S0 -> A0 -> R1,S1 -> A1 -> R2, S2 .... Rn, Sn -> An -> Rn+1, Sn+1 ->...
-	    - Agent's GOAL: Maximize its CUMULATIVE REWARD aka EXPECTED RETURN
+        - $Environment \to (state\,  S_{t}, reward\,   R_{t}) \to Agent \to action\, A_{t} \to Environment \to (state\,  S_{t+1}, reward\,  R_{t+1}) \to Agent (loop)$
+
+	    - IOW: $S_0 \to A_0 \to (R_1,S_1) \to A_1 \to (R_2, S_2) \to A_2 \to ... (R_n, S_n) \to A_n \to (R_{n+1}, S_{n+1}) \to...$
+	    - Agent's GOAL: Maximize its **CUMULATIVE REWARD** aka **EXPECTED RETURN**
 		- WHY IS THIS(Maximization of EXPECTED RETURN) the Agent's goal?
 		   b/c RL is based the REWARD HYPOTHESIS
 		    
@@ -51,19 +56,47 @@ jupyter: python3
 		  - Example?
 		- TO HAVE BEST BEHAVIOR, MAXIMIZE the EXPECTED CUMULATIVE REWARD
 		  - are EXPECTED CUMULATIVE REWARD same as EXPECTED RETURN? ==> YES!
-		  
+
+
+
 	- ANOTHER NAME for RL Process: MARKOV DECISION PROCESS (MDP)
 	
-   - Markov property
-      AGENT only needs CURRENT STATE to decide what ACTION to TAKE
-	     - CONTRAST with NEEDING HISTORY of ALL STATES and ACTIONS they took before
+   - Markov property:
+      - AGENT only needs CURRENT STATE to decide what ACTION to TAKE
+	   - CONTRAST with NEEDING HISTORY of ALL STATES and ACTIONS they took before
 		 
    - Observations/States Space
-        Observations/States - information our AGENT gets from the ENVIRONMENT.
-		   - Example: videogame, -> Observation/State is a Screenshot (AKA Frame) 
+      - Observations/States - information our AGENT gets from the ENVIRONMENT.
+		  - e.g. for a videogame -> Observation/State is a Screenshot (AKA Frame)
+      - Difference between State vs Observation:
+        - _State_: complete description of Environment (IOW, no hidden information) e.g. CHESS BOARD is STATE (AKA FULLY OBSERVED ENVIRONMENT)
+        - _Observation_: partial description of the Environment/State (e.g. `Super Mario Bros` shows part of screen close to Agent but not entire level)
    - Action Space
-   - Rewards and the discounting
+     - set of all possible actions in the environment
+     - types: _Discrete_ or _Continuous_
+     - _Discrete_: number of actions is _finite_
+     - _Continuous_: number of actions is _INFINITE_
+
+   - Rewards and the discounting:
+     - $R(\tau) = r_{t+1} + r_{t+2} + r_{t+3} + r_{t+4} + ...$ 
+        - Trajectory (read `Tau`) - sequence of states and actions
+        - Return: cumulative reward is equal to sum of all rewards of the sequence
+     - Equivalent to $$ R(\tau) = \sum_{k=0}^{\infty} r_{t + k + 1}$$ 
+     - Discounting:
+        - rewards that come sooner are **more likely to happen** since they are more predictable than the long term future rewards
+        - Define a discount rate `gamma` between 0 and 1. Most of the time its within $(0.99, 0.95)$
+           - the larger the gamma, the smaller the discount (long term is given more importance)
+           - the smaller the gamma, the bigger the discount (short term is given more importance)
+        - Then, each reward will be discounted by gamma to exponent of the time step. As the time step increases, the future reward is less and less likely to happen.
+        - Discounted cumulative expected reward is $$R(\tau) = r_{t+1} + \gamma r_{t+2} + \gamma^2 r_{t+3} + \gamma^3 r_{t+4} + ...$$
+           - $\gamma$ : (gamma) discount rate
+           - $\tau$ : (tau) trajectory (i.e. sequence of states and actions)
+           - $R(\tau)$ : (Return) cumulative reward
    - Task Types
+      - _task_: instance of RL problem.
+      - _episodic_ task - has a starting and ending point (aka terminal state). An _episode_ is a list of States, Actions, Rewards and new States.
+         - example: `Super Mario Bros` - episode begins at the launch of a new level and terminates when character is killed or reaches the end of the level.
+      - _continuous_ task - tasks has no terminal state. Agent must learn to how to choose the best action and simultaneously interact with environment.
 * Exploration/Exploitation Tradeoff
 * Solving RL Problems: 2 main approaches
    - The Policy PI 
