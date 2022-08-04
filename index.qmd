@@ -1,0 +1,5 @@
+---
+title: "HuggingFace Reinforcement Learning"
+jupyter: python3
+---
+> My notes for the Hugging Face Reinforcement Learning Course

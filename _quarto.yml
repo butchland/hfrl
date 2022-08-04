@@ -1,0 +1,21 @@
+project:
+  type: website
+
+website:
+  title: "Hugging Face Reinforcement Learning"
+  navbar:
+    left:
+      - href: index.qmd
+        text: Home
+      - href: unit1.qmd
+        text: Unit 1
+        
+
+format:
+  html:
+    theme: cosmo
+    css: styles.css
+    toc: true
+
+
+
