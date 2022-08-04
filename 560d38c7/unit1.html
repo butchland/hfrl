@@ -1,0 +1,363 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.0.37">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>Hugging Face Reinforcement Learning - Unit 1</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+span.underline{text-decoration: underline;}
+div.column{display: inline-block; vertical-align: top; width: 50%;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+</style>
+
+
+<script src="site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="site_libs/quarto-nav/headroom.min.js"></script>
+<script src="site_libs/clipboard/clipboard.min.js"></script>
+<script src="site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="site_libs/quarto-search/fuse.min.js"></script>
+<script src="site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="./">
+<script src="site_libs/quarto-html/quarto.js"></script>
+<script src="site_libs/quarto-html/popper.min.js"></script>
+<script src="site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="site_libs/quarto-html/anchor.min.js"></script>
+<link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 20,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit"
+  }
+}</script>
+
+  <script>window.backupDefine = window.define; window.define = undefined;</script><script src="https://cdn.jsdelivr.net/npm/katex@0.15.1/dist/katex.min.js"></script>
+  <script>document.addEventListener("DOMContentLoaded", function () {
+ var mathElements = document.getElementsByClassName("math");
+ var macros = [];
+ for (var i = 0; i < mathElements.length; i++) {
+  var texText = mathElements[i].firstChild;
+  if (mathElements[i].tagName == "SPAN") {
+   katex.render(texText.data, mathElements[i], {
+    displayMode: mathElements[i].classList.contains('display'),
+    throwOnError: false,
+    macros: macros,
+    fleqn: false
+   });
+}}});
+  </script>
+  <script>window.define = window.backupDefine; window.backupDefine = undefined;</script><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.15.1/dist/katex.min.css">
+
+<link rel="stylesheet" href="styles.css">
+</head>
+
+<body class="nav-fixed">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+    <nav class="navbar navbar-expand-lg navbar-dark ">
+      <div class="navbar-container container-fluid">
+      <a class="navbar-brand" href="./index.html">
+    <span class="navbar-title">Hugging Face Reinforcement Learning</span>
+  </a>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll me-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="./index.html">Home</a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link active" href="./unit1.html" aria-current="page">Unit 1</a>
+  </li>  
+</ul>
+              <div id="quarto-search" class="" title="Search"></div>
+          </div> <!-- /navcollapse -->
+      </div> <!-- /container-fluid -->
+    </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<!-- sidebar -->
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title">Unit 1</h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+    
+  </div>
+  
+
+</header>
+
+<ul>
+<li>What is RL
+<ul>
+<li><p>big picture:</p>
+<ul>
+<li><p><em>Agent(AI)</em> will <em>Learn</em> from <em>Environment</em> by <em>Interacting</em> with Environment and receive <em>Rewards</em> (neg/pos) as <em>Feedback</em> for performing <em>Actions</em></p></li>
+<li><pre><code> while not done:    
+     Environment -&gt; observation -&gt; Agent 
+    Agent -&gt; action -&gt; Environment
+    Environment -&gt; reward, new observation, done -&gt; Agent</code></pre></li>
+</ul></li>
+<li><p>example:</p></li>
+</ul>
+<pre><code>     boy learning to play video game 
+         - boy is Agent,
+           screen is observation
+           buttons is set of possible actions 
+           game is environment
+           rewards is points
+
+         - boy observes screen (sees avatar, coin, squid)      
+         - boy presses right button 
+         - game reacts by updating screen -&gt; avatar touches coin, rewards point
+              - boy learns getting coin rewards +1 
+              - boy presses button again and tough
+              - game reacts by updating screen -&gt; avatar touches squid and dies, rewarding neg points (dead) 
+              - boy learns touching squid rewards dead, and ends game</code></pre>
+<ul>
+<li>formal definition:
+<ul>
+<li>RL is <strong>FRAMEWORK</strong> for solving <strong>CONTROL TASKS</strong> (aka decision problems)</li>
+<li>by building <strong>AGENTS</strong></li>
+<li>AGENTS that <strong>LEARN</strong> from the <strong>ENVIRONMENT</strong>
+<ul>
+<li>LEARN by <strong>INTERACTING</strong> with ENVIRONMENT</li>
+<li>LEARN thru <strong>TRIAL and ERROR</strong></li>
+<li>LEARN by receiving <strong>REWARDS</strong>(NEGATIVE/POSITIVE) as <strong>FEEDBACK</strong></li>
+</ul></li>
+</ul></li>
+</ul></li>
+<li>RL Framework
+<ul>
+<li><p>RL Process</p>
+<ul>
+<li><p><span class="math inline">Environment \to (state\, S_{t}, reward\, R_{t}) \to Agent \to action\, A_{t} \to Environment \to (state\, S_{t+1}, reward\, R_{t+1}) \to Agent (loop)</span></p></li>
+<li><p>IOW: <span class="math inline">S_0 \to A_0 \to (R_1,S_1) \to A_1 \to (R_2, S_2) \to A_2 \to ... (R_n, S_n) \to A_n \to (R_{n+1}, S_{n+1}) \to...</span></p></li>
+<li><p>Agent’s GOAL: Maximize its <strong>CUMULATIVE REWARD</strong> aka <strong>EXPECTED RETURN</strong></p></li>
+<li><p>WHY IS THIS(Maximization of EXPECTED RETURN) the Agent’s goal? b/c RL is based the REWARD HYPOTHESIS</p></li>
+</ul></li>
+<li><p>the central idea of RL: The reward hypothesis</p>
+<ul>
+<li>ALL GOALS can be described as the MAXIMIZATION of EXPECTED RETURN
+<ul>
+<li>Example?</li>
+</ul></li>
+<li>TO HAVE BEST BEHAVIOR, MAXIMIZE the EXPECTED CUMULATIVE REWARD
+<ul>
+<li>are EXPECTED CUMULATIVE REWARD same as EXPECTED RETURN? ==&gt; YES!</li>
+</ul></li>
+</ul></li>
+<li><p>ANOTHER NAME for RL Process: MARKOV DECISION PROCESS (MDP)</p></li>
+<li><p>Markov property:</p>
+<ul>
+<li>AGENT only needs CURRENT STATE to decide what ACTION to TAKE</li>
+<li>CONTRAST with NEEDING HISTORY of ALL STATES and ACTIONS they took before</li>
+</ul></li>
+<li><p>Observations/States Space</p>
+<ul>
+<li>Observations/States - information our AGENT gets from the ENVIRONMENT.
+<ul>
+<li>e.g.&nbsp;for a videogame -&gt; Observation/State is a Screenshot (AKA Frame)</li>
+</ul></li>
+<li>Difference between State vs Observation:
+<ul>
+<li><em>State</em>: complete description of Environment (IOW, no hidden information) e.g.&nbsp;CHESS BOARD is STATE (AKA FULLY OBSERVED ENVIRONMENT)</li>
+<li><em>Observation</em>: partial description of the Environment/State (e.g.&nbsp;<code>Super Mario Bros</code> shows part of screen close to Agent but not entire level)</li>
+</ul></li>
+</ul></li>
+<li><p>Action Space</p>
+<ul>
+<li>set of all possible actions in the environment</li>
+<li>types: <em>Discrete</em> or <em>Continuous</em></li>
+<li><em>Discrete</em>: number of actions is <em>finite</em></li>
+<li><em>Continuous</em>: number of actions is <em>INFINITE</em></li>
+</ul></li>
+<li><p>Rewards and the discounting:</p>
+<ul>
+<li><span class="math inline">R(\tau) = r_{t+1} + r_{t+2} + r_{t+3} + r_{t+4} + ...</span>
+<ul>
+<li>Trajectory (read <code>Tau</code>) - sequence of states and actions</li>
+<li>Return: cumulative reward is equal to sum of all rewards of the sequence</li>
+</ul></li>
+<li>Equivalent to <span class="math display"> R(\tau) = \sum_{k=0}^{\infty} r_{t + k + 1}</span></li>
+<li>Discounting:
+<ul>
+<li>rewards that come sooner are <strong>more likely to happen</strong> since they are more predictable than the long term future rewards</li>
+<li>Define a discount rate <code>gamma</code> between 0 and 1. Most of the time its within <span class="math inline">(0.99, 0.95)</span>
+<ul>
+<li>the larger the gamma, the smaller the discount (long term is given more importance)</li>
+<li>the smaller the gamma, the bigger the discount (short term is given more importance)</li>
+</ul></li>
+<li>Then, each reward will be discounted by gamma to exponent of the time step. As the time step increases, the future reward is less and less likely to happen.</li>
+<li>Discounted cumulative expected reward is <span class="math display">R(\tau) = r_{t+1} + \gamma r_{t+2} + \gamma^2 r_{t+3} + \gamma^3 r_{t+4} + ...</span>
+<ul>
+<li><span class="math inline">\gamma</span> : (gamma) discount rate</li>
+<li><span class="math inline">\tau</span> : (tau) trajectory (i.e.&nbsp;sequence of states and actions)</li>
+<li><span class="math inline">R(\tau)</span> : (Return) cumulative reward</li>
+</ul></li>
+</ul></li>
+</ul></li>
+<li><p>Task Types</p>
+<ul>
+<li><em>task</em>: instance of RL problem.</li>
+<li><em>episodic</em> task - has a starting and ending point (aka terminal state). An <em>episode</em> is a list of States, Actions, Rewards and new States.
+<ul>
+<li>example: <code>Super Mario Bros</code> - episode begins at the launch of a new level and terminates when character is killed or reaches the end of the level.</li>
+</ul></li>
+<li><em>continuous</em> task - tasks has no terminal state. Agent must learn to how to choose the best action and simultaneously interact with environment.</li>
+</ul></li>
+</ul></li>
+<li>Exploration/Exploitation Tradeoff</li>
+<li>Solving RL Problems: 2 main approaches
+<ul>
+<li>The Policy PI</li>
+<li>Policy based Methods</li>
+<li>Value based Methods</li>
+</ul></li>
+<li>“Deep” in Deep RL</li>
+</ul>
+
+
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const clipboard = new window.ClipboardJS('.code-copy-button', {
+    target: function(trigger) {
+      return trigger.previousElementSibling;
+    }
+  });
+  clipboard.on('success', function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    setTimeout(function() {
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  });
+  function tippyHover(el, contentFn) {
+    const config = {
+      allowHTML: true,
+      content: contentFn,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start'
+    };
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      let href = ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      return note.innerHTML;
+    });
+  }
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const cites = ref.parentNode.getAttribute('data-cites').split(' ');
+    tippyHover(ref, function() {
+      var popup = window.document.createElement('div');
+      cites.forEach(function(cite) {
+        var citeDiv = window.document.createElement('div');
+        citeDiv.classList.add('hanging-indent');
+        citeDiv.classList.add('csl-entry');
+        var biblioDiv = window.document.getElementById('ref-' + cite);
+        if (biblioDiv) {
+          citeDiv.innerHTML = biblioDiv.innerHTML;
+        }
+        popup.appendChild(citeDiv);
+      });
+      return popup.innerHTML;
+    });
+  }
+});
+</script>
+</div> <!-- /content -->
+
+
+
+</body></html>
