@@ -208,15 +208,27 @@ ul.task-list{list-style: none;}
 <ul>
 <li>set of all possible actions in the environment</li>
 <li>types: <em>Discrete</em> or <em>Continuous</em></li>
-<li><em>Discrete</em>: number of actions is <em>finite</em></li>
-<li><em>Continuous</em>: number of actions is <em>INFINITE</em></li>
+<li><em>Discrete</em>: number of actions is <em>finite</em>
+<ul>
+<li>example: Supermario actions are limited to 4 directions + jump</li>
+</ul></li>
+<li><em>Continuous</em>: number of actions is <em>INFINITE</em>
+<ul>
+<li>example: self-driving car has unlimited gradation in angles in directions + other actions</li>
+</ul></li>
+<li>action space is crucial - plays important role in choosing the RL algo</li>
 </ul></li>
 <li><p>Rewards and the discounting:</p>
 <ul>
-<li><span class="math inline">R(\tau) = r_{t+1} + r_{t+2} + r_{t+3} + r_{t+4} + ...</span>
+<li><em>reward</em> is fundamental in RL:
 <ul>
-<li>Trajectory (read <code>Tau</code>) - sequence of states and actions</li>
-<li>Return: cumulative reward is equal to sum of all rewards of the sequence</li>
+<li>its the only feedback for the agent</li>
+<li>its the only way the agent knows if the action taken was good or not.</li>
+</ul></li>
+<li>Cumulative reward at each step <em>t</em> is <span class="math inline">R(\tau) = r_{t+1} + r_{t+2} + r_{t+3} + r_{t+4} + ...</span>
+<ul>
+<li>Trajectory <span class="math inline">\tau</span> (read <code>Tau</code>) - sequence of states and actions</li>
+<li>Return <span class="math inline">R(\tau)</span> : cumulative reward is equal to sum of all rewards of the sequence</li>
 </ul></li>
 <li>Equivalent to <span class="math display"> R(\tau) = \sum_{k=0}^{\infty} r_{t + k + 1}</span></li>
 <li>Discounting:
@@ -243,15 +255,39 @@ ul.task-list{list-style: none;}
 <ul>
 <li>example: <code>Super Mario Bros</code> - episode begins at the launch of a new level and terminates when character is killed or reaches the end of the level.</li>
 </ul></li>
-<li><em>continuous</em> task - tasks has no terminal state. Agent must learn to how to choose the best action and simultaneously interact with environment.</li>
+<li><em>continuous</em> task - tasks has no terminal state. Agent must learn to how to choose the best action and simultaneously interact with environment.
+<ul>
+<li>example: <em>stock trading bot</em>: no starting and terminal state – bot continues running until we decide to stop it.</li>
 </ul></li>
 </ul></li>
-<li>Exploration/Exploitation Tradeoff</li>
+</ul></li>
+<li>Exploration/Exploitation Tradeoff
+<ul>
+<li><em>Exploration</em> is exploring the environment by trying RANDOM actions in order to find more information about the environment</li>
+<li><em>Exploitation</em> is using known information to MAXIMIZE the reward</li>
+<li>Goal of the Agent is <em>maximize the reward</em> but if agent doesn’t explore, it can only exploit nearby states. If the agent explores the enviroment, it can discover bigger rewards.</li>
+<li>Analogy: local minima - agent explores nearby areas and doesn’t find a better global minima without exploration outside of local minima</li>
+<li>Need to balance tradeoff between exploitation (maximization of KNOWN rewards) vs exploration (discover NEW, possible BIGGER rewards)</li>
+<li>Need to define a RULE to handle trade-off</li>
+</ul></li>
 <li>Solving RL Problems: 2 main approaches
 <ul>
-<li>The Policy PI</li>
-<li>Policy based Methods</li>
-<li>Value based Methods</li>
+<li><p>How to build an RL Agent that can SELECT ACTIONS that MAXIMIZE its EXPECTED CUMULATIVE REWARD (aka <em>Return</em> <span class="math inline">R(\tau)</span>)</p></li>
+<li><p>The Policy <code>PI</code> <span class="math inline">\pi</span> : The Agent’s Brain</p>
+<ul>
+<li>the function that tells us the <em>action</em> to take given the <em>state</em> we are in.</li>
+</ul>
+<p><span class="math display"> State \to \pi(State) \to Action</span></p>
+<ul>
+<li>This Policy <span class="math inline">\pi</span> is the function we WANT to LEARN; our GOAL is to FIND the OPTIMAL POLICY – the POLICY that MAXIMIZES the EXPECTED RETURN when the AGENT acts according to it.</li>
+<li>We find this POLICY through <em>training</em>.</li>
+</ul></li>
+<li><p>Two Approaches to find POLICY <span class="math inline">\pi</span>:</p>
+<ul>
+<li><strong>Policy based Methods</strong> - directly; teach agent to learn which <em>action to take</em> given the state is in<br>
+</li>
+<li><strong>Value based Methods</strong> - indirectly; teach agent to learn which <em>state is more valuable</em> then take action that leads to <em>more valuable states</em></li>
+</ul></li>
 </ul></li>
 <li>“Deep” in Deep RL</li>
 </ul>
