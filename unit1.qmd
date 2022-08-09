@@ -75,12 +75,18 @@ jupyter: python3
      - set of all possible actions in the environment
      - types: _Discrete_ or _Continuous_
      - _Discrete_: number of actions is _finite_
+         * example: Supermario actions are limited to 4 directions + jump
      - _Continuous_: number of actions is _INFINITE_
+         * example: self-driving car has unlimited gradation in angles in directions + other actions
+     - action space is crucial - plays important role in choosing the RL algo
 
    - Rewards and the discounting:
-     - $R(\tau) = r_{t+1} + r_{t+2} + r_{t+3} + r_{t+4} + ...$ 
-        - Trajectory (read `Tau`) - sequence of states and actions
-        - Return: cumulative reward is equal to sum of all rewards of the sequence
+     - _reward_ is fundamental in RL: 
+        - its the only feedback for the agent
+        - its the only way the agent knows if the action taken was good or not. 
+     - Cumulative reward at each step _t_ is $R(\tau) = r_{t+1} + r_{t+2} + r_{t+3} + r_{t+4} + ...$ 
+        - Trajectory $\tau$ (read `Tau`) - sequence of states and actions
+        - Return $R(\tau)$ : cumulative reward is equal to sum of all rewards of the sequence
      - Equivalent to $$ R(\tau) = \sum_{k=0}^{\infty} r_{t + k + 1}$$ 
      - Discounting:
         - rewards that come sooner are **more likely to happen** since they are more predictable than the long term future rewards
@@ -97,9 +103,25 @@ jupyter: python3
       - _episodic_ task - has a starting and ending point (aka terminal state). An _episode_ is a list of States, Actions, Rewards and new States.
          - example: `Super Mario Bros` - episode begins at the launch of a new level and terminates when character is killed or reaches the end of the level.
       - _continuous_ task - tasks has no terminal state. Agent must learn to how to choose the best action and simultaneously interact with environment.
+         - example: _stock trading bot_: no starting and terminal state -- bot continues running until we decide to stop it.
+
 * Exploration/Exploitation Tradeoff
+   - _Exploration_ is exploring the environment by trying RANDOM actions in order to find more information about the environment
+   - _Exploitation_ is using known information to MAXIMIZE the reward
+   - Goal of the Agent is _maximize the reward_ but if agent doesn't explore, it can only exploit nearby states. If the agent explores the enviroment, it can discover bigger rewards.
+   - Analogy: local minima - agent explores nearby areas and doesn't find a better global minima without exploration outside of local minima
+   - Need to balance tradeoff between exploitation (maximization of KNOWN rewards) vs exploration (discover NEW, possible BIGGER rewards)
+   - Need to define a RULE to handle trade-off
+
 * Solving RL Problems: 2 main approaches
-   - The Policy PI 
-   - Policy based Methods
-   - Value based Methods
+   - How to build an RL Agent that can SELECT ACTIONS that MAXIMIZE its EXPECTED CUMULATIVE REWARD (aka _Return_ $R(\tau)$)
+   - The Policy `PI` $\pi$ : The Agent's Brain 
+      - the function that tells us the _action_ to take given the _state_ we are in. 
+      $$ State \to \pi(State) \to Action$$
+
+      - This Policy $\pi$ is the function we WANT to LEARN; our GOAL is to FIND the OPTIMAL POLICY -- the POLICY that MAXIMIZES the EXPECTED RETURN when the AGENT acts according to it.
+      - We find this POLICY through _training_.
+   - Two Approaches to find POLICY $\pi$:   
+      - **Policy based Methods** - directly; teach agent to learn which _action to take_ given the state is in  
+      - **Value based Methods** - indirectly; teach agent to learn which _state is more valuable_ then take action that leads to _more valuable states_
 * "Deep" in Deep RL 
