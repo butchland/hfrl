@@ -124,4 +124,23 @@ jupyter: python3
    - Two Approaches to find POLICY $\pi$:   
       - **Policy based Methods** - directly; teach agent to learn which _action to take_ given the state is in  
       - **Value based Methods** - indirectly; teach agent to learn which _state is more valuable_ then take action that leads to _more valuable states_
+   - Two Types of Policy:
+      - _Deterministic_ : Policy at a given state will **ALWAYS** return the same action 
+      $$ 
+      a = \pi (s) 
+      $$
+      action = policy(state)
+
+      - _Stochastic_: Policy outputs a **PROBALITY DISTRIBUTION** over actions
+      $$
+      \pi (a | s )  = P[A | s ]
+      $$
+      policy(actions|state) = probability distribution over the set of actions given the current state
+
+   - Value based Methods: Learn a **VALUE FUNCTION** that maps a _STATE_ to the _EXPECTED VALUE_ of being at that _STATE_
+      - the **VALUE** of a state is the **EXPECTED DISCOUNTED RETURN** the agent can get if it starts in that state and then **ACT** according to our policy.
+      $$
+      v_{\pi} (s) = \mathbb{E}_{\pi} [R_{t+1} + \gamma R_{t+2} + \gamma^{2} R_{t+3} + \dots | S_{t} = s]
+      $$
+      - _Act according to our policy_ - going to the state with the highest value
 * "Deep" in Deep RL 
