@@ -143,4 +143,8 @@ jupyter: python3
       v_{\pi} (s) = \mathbb{E}_{\pi} [R_{t+1} + \gamma R_{t+2} + \gamma^{2} R_{t+3} + \dots | S_{t} = s]
       $$
       - _Act according to our policy_ - going to the state with the highest value
-* "Deep" in Deep RL 
+* "Deep" in Deep RL
+   - Application  of Deep Neural Nets to solve RL Problems
+   - Example: Value based Algorithms
+      - Q-Learning (classic RL) to create a Q table to lookup the action for each state
+      - vs. Deep Q-Learning - use a Neural Net (NN) to approximate the Q value
