@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.0.37">
+<meta name="generator" content="quarto-1.2.335">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -11,10 +11,15 @@
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
-span.underline{text-decoration: underline;}
-div.column{display: inline-block; vertical-align: top; width: 50%;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
 div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
 ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1.6em;
+  vertical-align: middle;
+}
 </style>
 
 
@@ -80,19 +85,23 @@ ul.task-list{list-style: none;}
   <header id="quarto-header" class="headroom fixed-top">
     <nav class="navbar navbar-expand-lg navbar-dark ">
       <div class="navbar-container container-fluid">
-      <a class="navbar-brand" href="./index.html">
+      <div class="navbar-brand-container">
+    <a class="navbar-brand" href="./index.html">
     <span class="navbar-title">Hugging Face Reinforcement Learning</span>
-  </a>
+    </a>
+  </div>
           <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
   <span class="navbar-toggler-icon"></span>
 </button>
           <div class="collapse navbar-collapse" id="navbarCollapse">
             <ul class="navbar-nav navbar-nav-scroll me-auto">
   <li class="nav-item">
-    <a class="nav-link" href="./index.html">Home</a>
+    <a class="nav-link" href="./index.html">
+ <span class="menu-text">Home</span></a>
   </li>  
   <li class="nav-item">
-    <a class="nav-link active" href="./unit1.html" aria-current="page">Unit 1</a>
+    <a class="nav-link active" href="./unit1.html" aria-current="page">
+ <span class="menu-text">Unit 1</span></a>
   </li>  
 </ul>
               <div id="quarto-search" class="" title="Search"></div>
@@ -120,6 +129,7 @@ ul.task-list{list-style: none;}
 <div class="quarto-title-meta">
 
     
+  
     
   </div>
   
@@ -272,21 +282,34 @@ ul.task-list{list-style: none;}
 </ul></li>
 <li>Solving RL Problems: 2 main approaches
 <ul>
-<li><p>How to build an RL Agent that can SELECT ACTIONS that MAXIMIZE its EXPECTED CUMULATIVE REWARD (aka <em>Return</em> <span class="math inline">R(\tau)</span>)</p></li>
-<li><p>The Policy <code>PI</code> <span class="math inline">\pi</span> : The Agent’s Brain</p>
+<li>How to build an RL Agent that can SELECT ACTIONS that MAXIMIZE its EXPECTED CUMULATIVE REWARD (aka <em>Return</em> <span class="math inline">R(\tau)</span>)</li>
+<li>The Policy <code>PI</code> <span class="math inline">\pi</span> : The Agent’s Brain
 <ul>
-<li>the function that tells us the <em>action</em> to take given the <em>state</em> we are in.</li>
-</ul>
-<p><span class="math display"> State \to \pi(State) \to Action</span></p>
-<ul>
-<li>This Policy <span class="math inline">\pi</span> is the function we WANT to LEARN; our GOAL is to FIND the OPTIMAL POLICY – the POLICY that MAXIMIZES the EXPECTED RETURN when the AGENT acts according to it.</li>
-<li>We find this POLICY through <em>training</em>.</li>
+<li><p>the function that tells us the <em>action</em> to take given the <em>state</em> we are in. <span class="math display"> State \to \pi(State) \to Action</span></p></li>
+<li><p>This Policy <span class="math inline">\pi</span> is the function we WANT to LEARN; our GOAL is to FIND the OPTIMAL POLICY – the POLICY that MAXIMIZES the EXPECTED RETURN when the AGENT acts according to it.</p></li>
+<li><p>We find this POLICY through <em>training</em>.</p></li>
 </ul></li>
-<li><p>Two Approaches to find POLICY <span class="math inline">\pi</span>:</p>
+<li>Two Approaches to find POLICY <span class="math inline">\pi</span>:
 <ul>
 <li><strong>Policy based Methods</strong> - directly; teach agent to learn which <em>action to take</em> given the state is in<br>
 </li>
 <li><strong>Value based Methods</strong> - indirectly; teach agent to learn which <em>state is more valuable</em> then take action that leads to <em>more valuable states</em></li>
+</ul></li>
+<li>Two Types of Policy:
+<ul>
+<li><p><em>Deterministic</em> : Policy at a given state will <strong>ALWAYS</strong> return the same action <span class="math display">
+a = \pi (s)
+</span> action = policy(state)</p></li>
+<li><p><em>Stochastic</em>: Policy outputs a <strong>PROBALITY DISTRIBUTION</strong> over actions <span class="math display">
+\pi (a | s )  = P[A | s ]
+</span> policy(actions|state) = probability distribution over the set of actions given the current state</p></li>
+</ul></li>
+<li>Value based Methods: Learn a <strong>VALUE FUNCTION</strong> that maps a <em>STATE</em> to the <em>EXPECTED VALUE</em> of being at that <em>STATE</em>
+<ul>
+<li>the <strong>VALUE</strong> of a state is the <strong>EXPECTED DISCOUNTED RETURN</strong> the agent can get if it starts in that state and then <strong>ACT</strong> according to our policy. <span class="math display">
+v_{\pi} (s) = \mathbb{E}_{\pi} [R_{t+1} + \gamma R_{t+2} + \gamma^{2} R_{t+3} + \dots | S_{t} = s]
+</span></li>
+<li><em>Act according to our policy</em> - going to the state with the highest value</li>
 </ul></li>
 </ul></li>
 <li>“Deep” in Deep RL</li>
@@ -336,7 +359,24 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     button.classList.add('code-copy-button-checked');
     var currentTitle = button.getAttribute("title");
     button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
     setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
       button.setAttribute("title", currentTitle);
       button.classList.remove('code-copy-button-checked');
     }, 1000);
@@ -364,31 +404,50 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
   for (var i=0; i<noterefs.length; i++) {
     const ref = noterefs[i];
     tippyHover(ref, function() {
-      let href = ref.getAttribute('href');
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
       try { href = new URL(href).hash; } catch {}
       const id = href.replace(/^#\/?/, "");
       const note = window.document.getElementById(id);
       return note.innerHTML;
     });
   }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
   var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
   for (var i=0; i<bibliorefs.length; i++) {
     const ref = bibliorefs[i];
-    const cites = ref.parentNode.getAttribute('data-cites').split(' ');
-    tippyHover(ref, function() {
-      var popup = window.document.createElement('div');
-      cites.forEach(function(cite) {
-        var citeDiv = window.document.createElement('div');
-        citeDiv.classList.add('hanging-indent');
-        citeDiv.classList.add('csl-entry');
-        var biblioDiv = window.document.getElementById('ref-' + cite);
-        if (biblioDiv) {
-          citeDiv.innerHTML = biblioDiv.innerHTML;
-        }
-        popup.appendChild(citeDiv);
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
       });
-      return popup.innerHTML;
-    });
+    }
   }
 });
 </script>
